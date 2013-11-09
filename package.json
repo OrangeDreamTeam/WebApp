@@ -4,30 +4,21 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-<<<<<<< HEAD
     "express": "~3.3.4",
     "ejs": "~0.8.4",
     "socket.io": "~0.9.16",
-    "node-mysql": "~0.3.4"
+    "node-mysql": "~0.3.4",
+    "twilio": "*"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-=======
-    "ejs": "~0.8.4",
-    "express": "~3.3.4",
-    "node-mysql": "0.3.4"
->>>>>>> master
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/OrangeDreamTeam/WebApp.git"
   },
-<<<<<<< HEAD
-  "author": "",
-=======
   "author": "Orange Dream Team",
->>>>>>> master
   "license": "BSD",
   "bugs": {
     "url": "https://github.com/OrangeDreamTeam/WebApp/issues"

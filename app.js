@@ -1,5 +1,7 @@
 var express = require('express')
   , http = require('http')
+  , util = require('util')
+  , fs = require('fs')
   , path = require('path')
   , mysql = require('mysql')
   , dashboard = require('./routes/dashboard')
@@ -31,6 +33,10 @@ server.listen(app.get('port'), function(){
 
 app.get('/', function(req, res) {
   res.render('index', {});
+});
+app.post('/csv_import', function(req, res) {
+  console.log('file content:',req.body.csv);
+  res.end('done');
 });
 
 connection = mysql.createConnection({

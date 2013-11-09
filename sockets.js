@@ -1,7 +1,11 @@
 var io = require('socket.io').listen(server),
   util = require('util'),
+  twilio = require('twilio'),
+  capability = new twilio.Capability('AC5b1e80ceb7c8be03be7e6a0d1fce8874','fb721de8b4fc9c091a923b37a323a999');
   gcmhelper = require('./gcmhelper');
 
+
+capability.allowClientOutgoing('AP123');
 var phones = [
   {pnum: 4049066696,
     name: "dekelphone"},
@@ -45,6 +49,11 @@ io.sockets.on('connection', function(socket) {
   socket.on('routes', function() {
     socket.emit('routes', {routes: routes});
     socket.broadcast.emit('routes', {routes: routes});
+  });
+
+  socket.on('twi-token', function(data) {
+    console.log('TOKEN TOKEN TOKEN');
+    socket.emit('twi-token', {token: capability.generate(600), num: data.num});
   });
 
 });
