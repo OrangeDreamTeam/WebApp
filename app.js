@@ -1,7 +1,9 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , mysql = require('node-mysql');
+  , mysql = require('node-mysql')
+  , dashboard = require('./routes/dashboard')
+  , android = require('/routes/android');
 
 var app = express();
 
@@ -22,6 +24,14 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/getRoutes', dashboard.getRoutes);
+app.get('/getPhones', dashboard.getPhones);
+app.get('/getActiveRoutes', dashboard.getActiveRoutes);
+app.get('/getRouteByField', dashboard.getRoutesByFields);
+app.post('/createRoute', dashboard.createRoute);
+
+app.post('/android/initializeGCM', android.initializeGCM);
 
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
