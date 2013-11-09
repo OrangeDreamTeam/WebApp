@@ -1,41 +1,30 @@
 // Takes in the GCM Key, Phone Number, and Phone Name
 // Inserts or Updates the Phone row
 exports.initializeGCM = function(req, res) {
-  var gcmKey = req.body['gcmKey'];
-  var phoneNumber = req.body['phoneNumber'];
-  var phoneName = req.body['phoneName'];
+  var gcmKey = connection.escape(req.body['gcmKey']);
+  var phoneNumber = connection.escape(req.body['phoneNumber']);
+  var phoneName = connection.escape(req.body['phoneName']);
 
-  var Phone = req.models.phone;
+  var insertQuery = 'INSERT INTO Phone VALUES (' + insertValues + ') ON DUPLICATE KEY UPDATE gcmKey = VALUES(' + gmcKey + '), phoneName = VALUES(' + phoneName + ');';
 
-  Phone.find({phoneNumber: phoneNumber}, function(err, phone) {
+  connection.query(insertQuery, function(err, rows, fields) {
     if(err) {
       console.log(err);
-    }
-    else if(!phone) {
-      Phone.create({
-        gcmKey: gcmKey,
-        phoneNumber: phoneNumber,
-        phoneName: phoneName
-      }, function(err, newPhone) {
-        if(err) {
-          console.log(err);
-        }
-        else {
-          res.send(200);
-        }
-      });
+      res.send(500);
     }
     else {
-      phone.gcmKey = gcmKey;
-      phone.phoneName = phoneName;
-      phone.save(function(err, savedPhone) {
-        if(err) {
-          console.log(err);
-        }
-        else {
-          res.send(200);
-        }
-      });
+      res.send(200);
     }
   });
+}
+
+var rowsToJson = function(rows, fields, callback) {
+  var jsonResponse = [];
+  rows.forEach(function(row, index) {
+    jsonResponse.push({});
+    fields.forEach(function(field) {
+      jsonResponse[index].field = row.field;
+    });
+  });
+  callback(jsonResponse);
 }
