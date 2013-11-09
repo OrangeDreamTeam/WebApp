@@ -29,7 +29,7 @@ exports.getPhones = function(req, res) {
 }
 
 exports.getActiveRoutes = function(req, res) {
-  var selectQuery = 'SELECT * FROM ActiveRoute INNER JOIN Route ON Route.UID == ActiveRoute.routeId;';
+  var selectQuery = 'SELECT * FROM ActiveRoute INNER JOIN Route ON Route.UID == ActiveRoute.routeId INNER JOIN Phone ONActiveRoute.phoneId == Phone.UID;';
   connection.query(selectQuery, function(err, rows, fields) {
     if(err) {
       console.log(err);
@@ -43,10 +43,10 @@ exports.getActiveRoutes = function(req, res) {
   });
 }
 
-exports.getRouteByField = function(req, res) {
-  var fieldName = connection.escape(req.body['fieldName']);
-  var field = connection.escape(req.body['field']);
-  var selectQuery = 'SELECT * FROM Route WHERE ' + fieldName + ' == ' + field + ';';
+exports.getRoute = function(req, res) {
+  var routeId = connection.escape(req.body['routeId']);
+
+  var selectQuery = 'SELECT * FROM Route INNER JOIN Active Route ON Route.UID == ActiveRoute.routeId INNER JOIN Service ON Service.routeId == ActiveRoute.routeId INNER JOIN Stop ON Stop.UID == Service.stopId WHERE ActiveRoute.routeId == ' + routeId + ';';
 
   connection.query(selectQuery, function(err, rows, fields) {
     if(err) {
@@ -75,6 +75,25 @@ exports.createRoute = function(req, res) {
   insertValues = insertValues.substring(0, insertValues.length - 1);
 
   var insertQuery = 'INSERT INTO Route (' + insertFields + ') VALUES(' + insertValues + ');';
+  connection.query(insertQuery, function(err, rows) {
+    if(err) {
+      console.log(err);
+      res.send(500);
+    }
+    else {
+      res.send(200);
+    }
+  });
+}
+
+exports.startRoute = function(req, res) {
+  var phoneNumber = connection.escape(req.body['phoneNumber']);
+  var routeId = connection.escape(req.body['routeId']);
+
+  var insertValues = phoneNumber + ',' + routeId;
+  var insertFields = 'phoneNumber, routeId';
+  var insertQuery = 'INSERT INTO ActiveRoute (' + insertFields + ') VALUES (' + insertValues + ');';
+
   connection.query(insertQuery, function(err, rows) {
     if(err) {
       console.log(err);
