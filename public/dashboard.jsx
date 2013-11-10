@@ -185,7 +185,7 @@ var Dashboard = React.createClass({
         stops: 3},
       progress: 1}
     ];
-    return {activeRoutes: activeRoutes, selectedPhone: null, selectedRoute: null, phones:[], routes:[], alerts: [], twilio: false};
+    return {served: 100000, activeRoutes: activeRoutes, selectedPhone: null, selectedRoute: null, phones:[], routes:[], alerts: [], twilio: false};
   },
   componentWillMount: function() {
     var setState = this.setState;
@@ -245,7 +245,7 @@ var Dashboard = React.createClass({
   },
   render: function() {
     return <div className='dashboard'>
-      <Header served={"100,000"} downloads={"42"} user={{name:"Staff Member", image_src: "http://www.codinghorror.com/.a/6a0120a85dcdae970b017742d249d5970d-800wi"}} />
+      <Header served={this.state.served} downloads={"42"} user={{name:"Staff Member", image_src: "http://www.codinghorror.com/.a/6a0120a85dcdae970b017742d249d5970d-800wi"}} />
       <div className='body'>
         <div className='left-column'>
           <JQUERYISDUMB />
