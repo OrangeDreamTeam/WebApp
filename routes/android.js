@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 // Takes in the GCM Key, Phone Number, and Phone Name
 // Inserts or Updates the Phone row
 exports.initializeGCM = function(req, res) {
@@ -35,6 +37,20 @@ exports.initializeGCM = function(req, res) {
           }
         });
       }
+    }
+  });
+}
+
+exports.saveSignature = function(req, res) {
+  var imageData = req.body['imageData'];
+  var serviceId = req.body['serviceId'];
+  fs.writeFile('/signatures/' + serviceId + '.png', imageData, function(err) {
+    if(err) {
+      console.log(err);
+      res.send(500);
+    }
+    else {
+      res.send(200);
     }
   });
 }
