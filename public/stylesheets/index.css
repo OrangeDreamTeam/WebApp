@@ -73,13 +73,42 @@ body {
   font-family: 'Helvetica', Arial, sans-serif;
   font-size: 18px;
   text-align: center;
-  width: 300px;
+  width: 250px;
   height: 40px;
   margin-top: 40px;
   padding-top: 15px;
 }
 
+.left-column {
+  width: 600px;
+  float: left;
+}
+
+.viewReportsButton {
+  float: right;
+  border-radius: 5px;
+  border: none;
+  background-color: #028C90;
+  color: #FFFFFF;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  width: 250px;
+  height: 40px;
+  padding-top: 15px;
+  margin-top: -55px;
+}
+
 .hiddenFile {
   width: 0;
   height: 0;
+}
+
+.body {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.fileDiv {
+  width: 250px;
 }
