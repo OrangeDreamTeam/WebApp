@@ -63,6 +63,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('twi-token', function(data) {
+    console.log(data);
     socket.emit('twi-token', {token: capability.generate(600), num: data.num});
   });
 
