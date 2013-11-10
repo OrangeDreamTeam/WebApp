@@ -72,9 +72,13 @@ exports.getPhones = function(req, res) {
 exports.getTodaysServices = function(req, res) {
   var formatRows = function(rows) {
     return rows.map(function(row) {
+      var startDate = new Date(parseInt(row.startTime, 10));
+      var endDate = new Date(parseInt(row.endTime, 10));
+      startTime = cleanDate(startDate);
+      endTime = cleanDate(endDate);
       return {
-        start_time: new Date(parseInt(row.startTime, 10)).toLocaleTimeString(),
-        end_time: new Date(parseInt(row.endTime, 10)).toLocaleTimeString(),
+        start_time: startTime,
+        end_time: endTime,
         type: row.service,
         client_name: row.name,
         client_phone: row.clientNumber,
@@ -239,3 +243,25 @@ var CSVtoSchedule = function(csvFile, callback) {
     });
   });
 };
+
+
+var cleanDate = function(date) {
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var AM = 'AM';
+  if((hour > 12) || ((hour === 12) && (minute >= 0)) || ((hour === 12) && (second >= 0))) {
+    hour = hour - 12;
+    AM = 'PM';
+  }
+  if(hour == 0) {
+    hour = 12;
+    AM = 'AM';
+  }
+  if(hour < 10) {
+    hour = "" + hour.slice(1, 2);
+  }
+  if(minute < 10) {
+    minute = '0' + minute;
+  }
+  return hour + ':' + minute + ' ' + AMPM;
+}
