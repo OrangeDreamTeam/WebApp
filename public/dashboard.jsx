@@ -8,20 +8,16 @@ var Header = React.createClass({
     var login_indicator;
     if (this.props.user) {
       login_indicator = <div className="login-indicator">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+<svg className="user-image" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 	 width="46px" height="55px" viewBox="0 0 46 55" enable-background="new 0 0 46 55">
 <g>
 	<circle fill="#028C90" cx="24.213" cy="14.207" r="13.714"/>
 	<path fill="#028C90" d="M46,55v-6.543C46,40.896,42.652,35,37.252,35H11.174C5.773,35,0,40.896,0,48.457V55H46z"/>
 </g>
 </svg>
-        <span className="user-name">{this.props.user.name}</span>
+        <div className="user-name">{this.props.user.name}</div>
       </div>;
-    } else {
-      login_indicator = <div className="login-indicator">
-        <button onClick={this.props.promptLogin}>Login</button>
-      </div>;
-    }
+    } 
     var logo_style= {
       height: "100px",
       width: "165px",
@@ -29,11 +25,17 @@ var Header = React.createClass({
     };
     return <div className={['header']}><div className={['headerContainer']}>
       <div className='logo' style={logo_style}></div>
-      <div className='stats'>
-        <h3><strong>{this.props.served}</strong> Seniors Served</h3>
-        <h3><strong>{this.props.downloads}</strong> App Downloads</h3>
-      </div>
       {login_indicator}
+      <div className='stats'>
+        <div className='statNumbers'>
+          <div>{this.props.served}</div>
+          <div>{this.props.downloads}</div>
+        </div>
+        <div className='statText'>
+          <div>Seniors Served</div>
+          <div>App Downloads</div>
+        </div>
+      </div>
       </div>
     </div>;
   }
@@ -54,6 +56,9 @@ var JQUERYISDUMB = React.createClass({
       oReq.send(oMyForm);
     };
   },
+  triggerOnClick: function(e){
+    this.refs.fileIn.getDOMNode().click();
+  },
   render: function() {
     var style = {
       cursor: "pointer",
@@ -72,10 +77,12 @@ var JQUERYISDUMB = React.createClass({
       color: "White",
       backgroundColor: "#007fff"
     };
-    return <div style={div_style} className='upload-btn'>
-      UPLOAD THE DAMN CSV
-      <input style={style} type="file" onChange={this.uploadUsingStupidJQuery} />
-    </div>;
+    return <div className="fileDiv">
+    <input className="hiddenFile" ref="fileIn" type='file' onChange={this.uploadUsingStupidJQuery}/>
+     <div className='upload-btn' onClick={this.triggerOnClick}>IMPORT SCHEDULES</div></div>;
+  },
+  componentWillMount: function() {
+    
   }
 });
 

@@ -20,8 +20,66 @@ body {
 
 .stats {
   float: right;
+  font-size: 24px;
+  margin-right: 200px;
+  margin-top: 60px;
 }
 
 .login-indicator {
   float: right;
+  border-left: 1px solid #02696C;
+  height: 147px;
+}
+
+.statNumbers {
+  font-weight: bold;
+  float: left;
+  text-align: right;
+  padding-right: 40px;
+  font-family: 'Helvetica', Arial, sans-serif;
+}
+
+.statNumbers div {
+  margin-bottom: 5px;
+}
+
+.statText div {
+  margin-bottom: 5px;
+}
+
+.statText {
+  float: right;
+  font-family: 'Helvetica', Arial, sans-serif;
+}
+
+.user-name {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  margin-left: 50px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.user-image {
+  margin-top: 40px;
+  margin-left: 80px;
+}
+
+.upload-btn {
+  border-radius: 5px;
+  border: none;
+  background-color: #028C90;
+  color: #FFFFFF;
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  width: 300px;
+  height: 40px;
+  margin-top: 40px;
+  padding-top: 15px;
+}
+
+.hiddenFile {
+  width: 0;
+  height: 0;
 }
