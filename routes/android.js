@@ -7,7 +7,7 @@ exports.initializeGCM = function(req, res) {
 
   var insertValues = phoneName + ',' + phoneNumber + ',' + gcmKey;
 
-  var insertQuery = 'INSERT INTO Phone VALUES (' + insertValues + ') ON DUPLICATE KEY UPDATE gcmKey = VALUES(' + gmcKey + '), phoneName = VALUES(' + phoneName + ');';
+  var insertQuery = 'INSERT INTO Phone VALUES (' + insertValues + ') ON DUPLICATE KEY UPDATE gcmKey = VALUES(' + gcmKey + '), phoneName = VALUES(' + phoneName + ');';
 
   connection.query(insertQuery, function(err, rows, fields) {
     if(err) {
