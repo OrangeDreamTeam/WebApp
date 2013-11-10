@@ -4,10 +4,11 @@ var express = require('express')
   , fs = require('fs')
   , path = require('path')
   , mysql = require('mysql')
-  , dashboard = require('./routes/dashboard')
   , android = require('./routes/android');
 
 var app = express();
+
+dashboard = require('./routes/dashboard')
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');

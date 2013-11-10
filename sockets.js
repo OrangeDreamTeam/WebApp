@@ -43,12 +43,14 @@ io.sockets.on('connection', function(socket) {
     delete socket_funcs[socket.id];
   });
   socket.on('phones', function() {
-    socket.emit('phones', {phones: phones});
-    socket.broadcast.emit('phones', {phones: phones});
+//    socket.emit('phones', {phones: phones});
+ //   socket.broadcast.emit('phones', {phones: phones});
+    dashboard.socketPhones();
   });
   socket.on('routes', function() {
-    socket.emit('routes', {routes: routes});
-    socket.broadcast.emit('routes', {routes: routes});
+    //socket.emit('routes', {routes: routes});
+    //socket.broadcast.emit('routes', {routes: routes});
+    dashboard.socketRoutes();
   });
 
   socket.on('twi-token', function(data) {
@@ -76,7 +78,10 @@ exports.sendTrackingInfo = function(socket_id, info) {
   }
 };
 
-exports.updateRoutes = function(routes, callback) {
+exports.updateRoutes = function(routes) {
   io.sockets.emit('routes', {routes: routes});
-  callback();
+}
+
+exports.sendPhones = function(phones) {
+  io.sockets.emit('phones', {phones: phones});
 }

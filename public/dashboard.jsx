@@ -48,7 +48,6 @@ var JQUERYISDUMB = React.createClass({
     reader.readAsText(file, 'UTF-8');
     reader.onload = function(evt) {
       var fileString = evt.target.result;
-      debugger;
       var oMyForm = new FormData();
       oMyForm.append('csv', fileString);
       var oReq = new XMLHttpRequest();
@@ -91,8 +90,8 @@ var ContactList = React.createClass({
     var phones = this.props.phones, phoneBoxes = [];
     for (var i = 0; i < phones.length; i++) {
       phoneBoxes.push(<div className="phone-box" onClick={this.props.onSelect} data-phone={JSON.stringify(phones[i])}>
-        <div className="phoneName">{phones[i].name}</div>
-        <div className="contactPhone">{phones[i].pnum}</div>
+        <div className="phoneName">{phones[i].phoneName}</div>
+        <div className="contactPhone">{phones[i].phoneNumber}</div>
         </div>);
     }
     return <div className='contact-list'><div className="contactTitle">Contact List</div>{phoneBoxes}</div>;
@@ -148,8 +147,8 @@ var RouteTracker = React.createClass({
     for (var i = 0; i < routes.length; i++) {
       routejson = JSON.stringify(routes[i]);
       routeBoxes.push(<div className="route-tracking-box">
-          <div className='caretaker-name'>{routes[i].caretaker}</div>
-          <div className='route-progress'>{'Stops Visited: '+routes[i].progress+'/'+routes[i].route.stops}</div>
+          <div className='caretaker-name'>{routes[i].routeName + " - " + routes[i].phoneName}</div>
+          <div className='route-progress'>{'Stops Visited: '+1+'/'+3}</div>
           <div className='route-actions'>
             <button data-type={'schedule'} data-route={routejson} onClick={this.props.onAction}>Schedule</button>
             <button data-type={'track'} data-route={routejson} onClick={this.props.onAction}>Map</button>
@@ -233,12 +232,12 @@ var Dashboard = React.createClass({
     console.log("hra", e.target.dataset); 
     var route = JSON.parse(e.target.dataset.route);
     if (e.target.dataset.type === "track") {
-      socket.emit('track', {phonenumber: route.phone.pnum});
+      socket.emit('track', {phonenumber: route.phoneNumber});
     } else if (e.target.dataset.type === "alert") {
-      socket.emit('alert', {phonenumber: route.phone.pnum});
+      socket.emit('alert', {phonenumber: route.phoneNumber});
     } else if (e.target.dataset.type === "call") {
       console.log('call');
-      socket.emit('twi-token', {num: route.phone.pnum});
+      socket.emit('twi-token', {num: route.phoneNumber});
     }
   },
   showRouteinfo: function(e) {
@@ -251,7 +250,7 @@ var Dashboard = React.createClass({
         <div className='left-column'>
           <JQUERYISDUMB />
           <div className='viewReportsButton'>VIEW REPORTS</div>
-          <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.activeRoutes} twilio={this.state.twilio}/>
+          <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.routes} twilio={this.state.twilio}/>
 
         </div>
         <div className='right-column'>
