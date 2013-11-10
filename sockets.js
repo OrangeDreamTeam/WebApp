@@ -1,11 +1,11 @@
 var io = require('socket.io').listen(server),
   util = require('util'),
   twilio = require('twilio'),
-  capability = new twilio.Capability('AC5b1e80ceb7c8be03be7e6a0d1fce8874','fb721de8b4fc9c091a923b37a323a999');
+  capability = new twilio.Capability('AC26d09258622cd3278b5677a4d5550110','628e0dab1e34df75b68a70ba13286b2b');
   gcmhelper = require('./gcmhelper');
 
 
-capability.allowClientOutgoing('AP123');
+capability.allowClientOutgoing('AP8be81f51552aa2b879fe4f6dacb15674');
 var phones = [
   {pnum: 4049066696,
     name: "dekelphone"},
