@@ -51,7 +51,6 @@ var JQUERYISDUMB = React.createClass({
     reader.readAsText(file, 'UTF-8');
     reader.onload = function(evt) {
       var fileString = evt.target.result;
-      debugger;
       var oMyForm = new FormData();
       oMyForm.append('csv', fileString);
       var oReq = new XMLHttpRequest();
@@ -94,8 +93,8 @@ var ContactList = React.createClass({
     var phones = this.props.phones, phoneBoxes = [];
     for (var i = 0; i < phones.length; i++) {
       phoneBoxes.push(<div className="phone-box" onClick={this.props.onSelect} data-phone={JSON.stringify(phones[i])}>
-        <div className="phoneName">{phones[i].name}</div>
-        <div className="contactPhone">{phones[i].pnum}</div>
+        <div className="phoneName">{phones[i].phoneName}</div>
+        <div className="contactPhone">{phones[i].phoneNumber}</div>
         </div>);
     }
     return <div className='contact-list'><div className="contactTitle">Contact List</div>{phoneBoxes}</div>;
@@ -118,18 +117,19 @@ var RoutesList = React.createClass({
 
 var AlertsList = React.createClass({
   render: function() {
+    console.log('120',this.props.alerts);
     var alerts = [], alert;
     for (var i = 0; i < this.props.alerts.length; i++) {
       alert = this.props.alerts[i];
       alerts.push(<div className="alert-box">
-          <div className="alert-time">{alert.time.toLocaleTimeString()}</div>
+          <div className="alert-time">{new Date(parseInt(alert.time, 10)).toLocaleTimeString()}</div>
           <div className="message">
             <div className="message-body">
               {alert.message}
             </div>
             <div className="message-recipient">
-              <span className="name">{alert.name}</span>
-              <span className="phone">{alert.phone}</span>
+              <span className="name">{alert.sender}</span>
+              <span className="phone">{alert.phoneNumber}</span>
             </div>
           </div>
         </div>);
@@ -151,8 +151,8 @@ var RouteTracker = React.createClass({
     for (var i = 0; i < routes.length; i++) {
       routejson = JSON.stringify(routes[i]);
       routeBoxes.push(<div className="route-tracking-box">
-          <div className='caretaker-name'>{routes[i].caretaker}</div>
-          <div className='route-progress'>{'Stops Visited: '+routes[i].progress+'/'+routes[i].route.stops}</div>
+          <div className='caretaker-name'>{routes[i].routeName + " - " + routes[i].phoneName}</div>
+          <div className='route-progress'>{'Stops Visited: '+1+'/'+3}</div>
           <div className='route-actions'>
             <button data-type={'schedule'} data-route={routejson} onClick={this.props.onAction}>Schedule</button>
             <button data-type={'track'} data-route={routejson} onClick={this.props.onAction}>Map</button>
@@ -185,31 +185,27 @@ var Dashboard = React.createClass({
         stops: 3},
       progress: 1}
     ];
-    var alerts = [
-      {name: "Jamie Crabb",
-       phone: "912-337-1703",
-       time: new Date(2013, 11, 9, 6, 0),
-       message: "Yuval Dekel will not be home today, you need to reschedule for another day."
-      }
-    ];
-    return {activeRoutes: activeRoutes, selectedPhone: null, selectedRoute: null, phones:[], routes:[], alerts: alerts, twilio: false};
+    return {activeRoutes: activeRoutes, selectedPhone: null, selectedRoute: null, phones:[], routes:[], alerts: [], twilio: false};
   },
   componentWillMount: function() {
     var setState = this.setState;
     var component = this;
     //setup socket.io notifications and stuff
     socket.on('alert', function (data) {
-    console.log(data);
+      console.log(data);
     });
     socket.on('track', function (info) {
-    console.log(data);
+      console.log(data);
     });
     socket.on('phones', function (phonesData) {
-    setState.call(component,{phones: phonesData.phones});
+      setState.call(component,{phones: phonesData.phones});
     console.log(phonesData);
     });
+    socket.on('alerts', function (phonesData) {
+      setState.call(component,{alerts: phonesData.alerts});
+    });
     socket.on('routes', function (routesData) {
-    setState.call(component,{routes: routesData.routes});
+      setState.call(component,{routes: routesData.routes});
     console.log(routesData)
     });
     socket.emit('phones');
@@ -236,12 +232,12 @@ var Dashboard = React.createClass({
     console.log("hra", e.target.dataset); 
     var route = JSON.parse(e.target.dataset.route);
     if (e.target.dataset.type === "track") {
-      socket.emit('track', {phonenumber: route.phone.pnum});
+      socket.emit('track', {phonenumber: route.phoneNumber});
     } else if (e.target.dataset.type === "alert") {
-      socket.emit('alert', {phonenumber: route.phone.pnum});
+      socket.emit('alert', {phonenumber: route.phoneNumber});
     } else if (e.target.dataset.type === "call") {
       console.log('call');
-      socket.emit('twi-token', {num: route.phone.pnum});
+      socket.emit('twi-token', {num: route.phoneNumber});
     }
   },
   showRouteinfo: function(e) {
@@ -254,7 +250,7 @@ var Dashboard = React.createClass({
         <div className='left-column'>
           <JQUERYISDUMB />
           <div className='viewReportsButton'>VIEW REPORTS</div>
-          <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.activeRoutes} twilio={this.state.twilio}/>
+          <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.routes} twilio={this.state.twilio}/>
 
         </div>
         <div className='right-column'>
