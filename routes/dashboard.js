@@ -26,12 +26,25 @@ exports.socketRoutes = function() {
   });
 };
 
+exports.socketAlerts = function() {
+  var selectQuery = 'SELECT * FROM Alert INNER JOIN Phone on Phone.UID = Alert.phoneId;';
+  connection.query(selectQuery, function(err, rows, fields) {
+    if(err) {
+    }
+    else {
+      rowsToJson(rows, fields, function(response) {
+        console.logR](response);
+        sockets.sendAlerts(response);
+      });
+    }
+  });
+
+};
+
 exports.socketPhones = function() {
   var selectQuery = 'SELECT * FROM Phone;';
   connection.query(selectQuery, function(err, rows, fields) {
     if(err) {
-      console.log(err);
-      res.send(500);
     }
     else {
       rowsToJson(rows, fields, function(response) {

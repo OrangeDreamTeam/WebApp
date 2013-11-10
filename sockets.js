@@ -80,8 +80,12 @@ exports.sendTrackingInfo = function(socket_id, info) {
 
 exports.updateRoutes = function(routes) {
   io.sockets.emit('routes', {routes: routes});
-}
+};
 
 exports.sendPhones = function(phones) {
   io.sockets.emit('phones', {phones: phones});
-}
+};
+
+exports.sendAlerts = function(phones) {
+  io.sockets.emit('alerts', {alerts: alerts});
+};
