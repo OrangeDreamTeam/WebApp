@@ -40,6 +40,7 @@ exports.requestAlert = function(phonenum, socket_id, message) {
       console.log(err);
     }
     else {
+      console.log(message);
       var regId = row[0].gcmKey;
       var message = new gcm.Message({
         delayWhileIdle: true,
