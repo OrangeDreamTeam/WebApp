@@ -213,14 +213,13 @@ var Dashboard = React.createClass({
     socket.emit('routes');
     socket.emit('alerts');
     socket.on('twi-token', function(twiData) {
-      console.log('twi-token');
       Twilio.Device.setup(twiData.token);
-      Twilio.Device.ready(function() {
+      Twilio.Device.ready(function(device) {
         Twilio.Device.connect({
-          agent: "Jarvis",
-          phone_number: twiData.num
+          CallerId: '+1 678-389-7815',
+          PhoneNumber: twiData.num
         });
-        setState.call(component, {twilio: true});
+        //setState.call(component, {twilio: true});
       });
     });
   },
