@@ -105,6 +105,11 @@ exports.startRoute = function(req, res) {
   });
 }
 
+exports.importCVS = function(req, res) {
+  var cvs = req.body['csv'];
+  
+}
+
 var rowsToJson = function(rows, fields, callback) {
   var jsonResponse = [];
   rows.forEach(function(row, index) {

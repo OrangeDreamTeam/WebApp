@@ -43,7 +43,7 @@ var JQUERYISDUMB = React.createClass({
       var oMyForm = new FormData();
       oMyForm.append('csv', fileString);
       var oReq = new XMLHttpRequest();
-      oReq.open("POST", "/csv_import");
+      oReq.open("POST", "/importCSV");
       oReq.send(oMyForm);
     };
   },
