@@ -33,7 +33,7 @@ exports.socketAlerts = function() {
     }
     else {
       rowsToJson(rows, fields, function(response) {
-        console.logR](response);
+        console.log(response);
         sockets.sendAlerts(response);
       });
     }
