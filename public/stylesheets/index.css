@@ -1,0 +1,27 @@
+.header {
+  background-color: #F2F1EB;
+  height: 147px;
+  border-bottom: 10px solid #028C90;
+}
+
+body {
+  margin: 0;
+}
+
+.headerContainer {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.logo {
+  float: left;
+  margin-top: 20px;
+}
+
+.stats {
+  float: right;
+}
+
+.login-indicator {
+  float: right;
+}

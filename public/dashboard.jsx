@@ -27,13 +27,14 @@ var Header = React.createClass({
       width: "165px",
       backgroundImage: "url(/dashlogo.png)"
     };
-    return <div className={['header']}>
+    return <div className={['header']}><div className={['headerContainer']}>
       <div className='logo' style={logo_style}></div>
       <div className='stats'>
         <h3><strong>{this.props.served}</strong> Seniors Served</h3>
         <h3><strong>{this.props.downloads}</strong> App Downloads</h3>
       </div>
       {login_indicator}
+      </div>
     </div>;
   }
 });
