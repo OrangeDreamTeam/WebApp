@@ -31,11 +31,12 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('alert', function(data) {
-    gcmhelper.requestAlert(data.phonenumber, socket.id);
+    gcmhelper.requestAlert(data.phonenumber, socket.id, data.message);
+    dashboard.addAlert(data.phoneid, data.message);
   });
 
   var sendTrackingInfo = function(info) {
-    socket.send(info);
+    socket.emit('track',info);
   };
 
   socket_funcs[socket.id] = {
@@ -56,6 +57,9 @@ io.sockets.on('connection', function(socket) {
     //socket.broadcast.emit('routes', {routes: routes});
     dashboard.socketRoutes();
   });
+  socket.on('routes', function() {
+    dashboard.socketAlerts();
+  });
 
   socket.on('twi-token', function(data) {
     console.log('TOKEN TOKEN TOKEN');
@@ -75,6 +79,8 @@ io.sockets.on('connection', function(socket) {
  * located and the location coordinates.
  */
 exports.sendTrackingInfo = function(socket_id, info) {
+  console.log("oeuaeu",arguments);
+  console.log(socket_funcs);
   if (socket_funcs[socket_id]) {
     if (socket_funcs[socket_id].sendTrackingInfo) {
       socket_funcs[socket_id].sendTrackingInfo(info);
@@ -90,6 +96,8 @@ exports.sendPhones = function(phones) {
   io.sockets.emit('phones', {phones: phones});
 };
 
-exports.sendAlerts = function(phones) {
+exports.sendAlerts = function(alerts) {
+  console.log(alerts);
   io.sockets.emit('alerts', {alerts: alerts});
 };
+
