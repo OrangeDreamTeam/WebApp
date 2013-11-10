@@ -96,7 +96,6 @@ exports.getTodaysServices = function(req, res) {
       console.log(err);
       res.send(500);
     } else {
-      console.log(rows);
       res.json({date:new Date().getTime(), services: formatRows(rows)});
     }
   });

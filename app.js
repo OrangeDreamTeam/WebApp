@@ -75,7 +75,8 @@ connection.connect(function(err) {
     app.get('/today/:phonenum', dashboard.getTodaysServices);
     app.get('/servicesCount', dashboard.getServiceCount);
     app.post('/hey', function(req, res) {
-      res.send('<Response><Dial><Client>' + req.body['PhoneNumber'] + '</Client></Dial></Response>');
+      console.log(req.body);
+      res.send('<Response><Dial timeout="10" record="false">3522469088</Dial></Response>');
     });
 
     app.post('/createRoute', dashboard.createRoute);
