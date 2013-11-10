@@ -245,11 +245,19 @@ var Dashboard = React.createClass({
   render: function() {
     return <div className='dashboard'>
       <Header served={"100,000"} downloads={"42"} user={{name:"Staff Member", image_src: "http://www.codinghorror.com/.a/6a0120a85dcdae970b017742d249d5970d-800wi"}} />
-      <JQUERYISDUMB />
-      <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.activeRoutes} twilio={this.state.twilio}/>
-      <RoutesList onSelect={this.selectRoute} routes={this.state.routes} />
-      <AlertsList alerts={this.state.alerts} />
-      <ContactList ponSelect={this.selectPhone} phones={this.state.phones} />
+      <div className='body'>
+        <div className='left-column'>
+          <JQUERYISDUMB />
+          <JQUERYISDUMB />
+          <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.activeRoutes} twilio={this.state.twilio}/>
+
+        </div>
+        <div className='right-column'>
+          <RoutesList onSelect={this.selectRoute} routes={this.state.routes} />
+          <AlertsList alerts={this.state.alerts} />
+          <ContactList ponSelect={this.selectPhone} phones={this.state.phones} />
+        </div>
+      </div>
     </div>;
   }
 });
