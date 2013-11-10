@@ -59,6 +59,8 @@ connection.connect(function(err) {
     app.get('/getRoutes', dashboard.getRoutes);
     app.get('/getPhones', dashboard.getPhones);
     app.get('/getActiveRoutes', dashboard.getActiveRoutes);
+    app.get('/today/:phonenum', dashboard.getTodaysServices);
+
     app.post('/createRoute', dashboard.createRoute);
     app.post('/importCSV', dashboard.importCSV);
 

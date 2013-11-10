@@ -13,7 +13,7 @@ exports.getRoutes = function(req, res) {
       });
     }
   });
-}
+};
 
 exports.getPhones = function(req, res) {
   var selectQuery = 'SELECT * FROM Phone;';
@@ -28,7 +28,36 @@ exports.getPhones = function(req, res) {
       });
     }
   });
-}
+};
+exports.getTodaysServices = function(req, res) {
+  var formatRows = function(rows) {
+    return rows.map(function(row) {
+      return {
+        start_time: new Date(parseInt(row.startTime, 10)).toLocaleTimeString(),
+        end_time: new Date(parseInt(row.endTime, 10)).toLocaleTimeString(),
+        type: row.service,
+        client_name: row.name,
+        client_phone: row.clientNumber,
+        client_address: row.address,
+        client_notes: row.clientNotes,
+        route_id: row.routeId
+      };
+    });
+  };
+  var now = new Date();
+  var start = new Date(now.getYear() + 1900, now.getMonth(), now.getDate());
+  var end = new Date(now.getYear() + 1900, now.getMonth(), now.getDate()+1);
+    var selectQuery = 'SELECT * FROM Service INNER JOIN Route ON Service.routeId = Route.UID INNER JOIN Phone ON Phone.UID = Route.phoneId INNER JOIN Client ON Client.UID = Service.clientId WHERE Phone.phoneNumber = "'+req.params["phonenum"]+'" AND Service.startTime > "'+start.getTime()+'" AND Service.endTime < "'+end.getTime()+'";';
+  connection.query(selectQuery, function(err, rows, fields) {
+    if(err) {
+      console.log(err);
+      res.send(500);
+    } else {
+      console.log(rows);
+      res.json({date:new Date().getTime(), services: formatRows(rows)});
+    }
+  });
+};
 
 exports.getActiveRoutes = function(req, res) {
   var selectQuery = 'SELECT * FROM ActiveRoute INNER JOIN Route ON Route.UID == ActiveRoute.routeId INNER JOIN Phone ONActiveRoute.phoneId == Phone.UID;';
@@ -43,7 +72,7 @@ exports.getActiveRoutes = function(req, res) {
       });
     }
   });
-}
+};
 
 exports.getRoute = function(req, res) {
   var routeId = connection.escape(req.body['routeId']);
@@ -61,7 +90,7 @@ exports.getRoute = function(req, res) {
       });
     }
   });  
-}
+};
 
 exports.createRoute = function(req, res) {
   var route = connection.escape(req.body['route']);
@@ -86,7 +115,7 @@ exports.createRoute = function(req, res) {
       res.send(200);
     }
   });
-}
+};
 
 exports.startRoute = function(req, res) {
   var phoneNumber = connection.escape(req.body['phoneNumber']);
@@ -105,14 +134,14 @@ exports.startRoute = function(req, res) {
       res.send(200);
     }
   });
-}
+};
 
 exports.importCSV = function(req, res) {
   var csv = req.body['csv'];
   CSVtoSchedule(csv, function() {
     res.send(200);
   });
-}
+};
 
 var rowsToJson = function(rows, fields, callback) {
   var jsonResponse = [];
@@ -123,7 +152,7 @@ var rowsToJson = function(rows, fields, callback) {
     });
   });
   callback(jsonResponse);
-}
+};
 
 var CSVtoSchedule = function(csvFile, callback) {
   csv().from.string(csvFile, {
@@ -132,7 +161,7 @@ var CSVtoSchedule = function(csvFile, callback) {
     escape: '"'
   }).to(function(data) {
   }).transform(function(row) {
-    var insertClientQuery = 'INSERT INTO Client (name, phoneNumber, address, notes) VALUES ("' + row.name + '", "' + row.phoneNumber + '", "' + row.address + '", "' + row.clientNotes + '");';
+    var insertClientQuery = 'INSERT INTO Client (name, clientNumber, address, clientNotes) VALUES ("' + row.name + '", "' + row.clientNumber + '", "' + row.address + '", "' + row.clientNotes + '");';
     console.log(insertClientQuery);
     connection.query(insertClientQuery, function(err, client) {
       if(err) {
@@ -177,4 +206,4 @@ var CSVtoSchedule = function(csvFile, callback) {
       }
     });
   });
-}
+};
