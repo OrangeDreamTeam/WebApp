@@ -220,10 +220,6 @@ var Dashboard = React.createClass({
           phone_number: twiData.num
         });
         setState.call(component, {twilio: true});
-        //TODO: VERY PRONE TO BUGS, MAKE BETTER. DEKEL.
-        setTimeout(function() {
-          setState.call(component, {twilio: false});
-        }, 600000);
       });
     });
   },

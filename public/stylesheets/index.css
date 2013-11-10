@@ -258,14 +258,14 @@ body {
   outline: none;
   border: none;
   height: 35px;
-  margin-left: 50px;
+  margin-left: 75px;
   margin-top: -5px;
   cursor: pointer;
 }
 
 .alerts {
   margin-left: 25px;
-  width: 300px;
+  width: 330px;
   margin-top: 10px;
 }
 
