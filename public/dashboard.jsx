@@ -217,7 +217,7 @@ var Dashboard = React.createClass({
       Twilio.Device.setup(twiData.token);
       Twilio.Device.ready(function() {
         Twilio.Device.connect({
-          agent: "Smith",
+          agent: "Jarvis",
           phone_number: twiData.num
         });
         setState.call(component, {twilio: true});
