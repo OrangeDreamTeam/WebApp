@@ -66,6 +66,7 @@ body {
 }
 
 .upload-btn {
+  cursor: pointer;
   border-radius: 5px;
   border: none;
   background-color: #028C90;
@@ -77,6 +78,12 @@ body {
   height: 40px;
   margin-top: 40px;
   padding-top: 15px;
+  border-bottom: 3px solid #167564;
+}
+
+.upload-btn:hover{
+  margin-top: 35px;
+  border-bottom: 8px solid #167564;
 }
 
 .hiddenFile {
