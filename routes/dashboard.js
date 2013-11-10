@@ -244,6 +244,16 @@ var CSVtoSchedule = function(csvFile, callback) {
   });
 };
 
+exports.getServiceCount = function(req, res) {
+  connection.query('SELECT count(*) FROM Service WHERE Service.signaturePath IS NOT NULL;', function(err, row, fields) {
+    if(err) {
+      console.log(err);
+    }
+    else {
+      res.json(row[0]['count(*)']);
+    }
+  });
+}
 
 var cleanDate = function(date) {
   var hour = date.getHours();

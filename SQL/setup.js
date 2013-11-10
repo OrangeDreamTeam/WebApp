@@ -24,7 +24,7 @@ queries.push('CREATE DATABASE srconn;');
 queries.push('USE srconn;')
 queries.push('CREATE TABLE Phone (UID int NOT NULL AUTO_INCREMENT, phoneName varchar(255), phoneNumber varchar(255), gcmKey varchar(5000), PRIMARY KEY (UID));');
 queries.push('CREATE TABLE Route (UID int NOT NULL AUTO_INCREMENT, lastFinishedBy varchar(255), lastFinishedDate varchar(255), routeName varchar(255), phoneId int, PRIMARY KEY (UID));');
-queries.push('CREATE TABLE Service (UID int NOT NULL AUTO_INCREMENT, routeId int, clientId int, service varchar(255), notes varchar(10000), units int, FS varchar(255), startTime varchar(255), endTime varchar(255), signaturePath varchar(255), providedServices varchar(1024), PRIMARY KEY(UID));');
+queries.push('CREATE TABLE Service (UID int NOT NULL AUTO_INCREMENT, routeId int, clientId int, service varchar(255), notes varchar(10000), units int, FS varchar(255), startTime varchar(255), endTime varchar(255), signaturePath varchar(255), providedServices varchar(1024) DEFAULT NULL, PRIMARY KEY(UID));');
 queries.push('CREATE TABLE Client (UID int NOT NULL AUTO_INCREMENT, name varchar(255), clientNumber varchar(255), address varchar(255), clientNotes varchar(255), PRIMARY KEY (UID));')
 queries.push('CREATE TABLE Alert (UID int NOT NULL AUTO_INCREMENT, phoneId int, message varchar(140), sender varchar(255), time varchar(255), PRIMARY KEY (UID));');
 
