@@ -1,7 +1,7 @@
 /**
  * @jsx React.DOM
  */
-var socket = io.connect('http://localhost');
+var socket = io.connect('http://' + location.hostname);
 
 var Header = React.createClass({
   link: function() {

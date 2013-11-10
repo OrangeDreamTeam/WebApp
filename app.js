@@ -36,11 +36,21 @@ app.get('/', function(req, res) {
   res.render('index', {});
 });
 
-connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'srconn'
-});
+if(process.env.NODE_ENV == 'dev') {
+  connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'srconn'
+  });
+}
+else {
+  connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'srconn',
+    password: 'jarvis'
+  });
+}
 
 connection.connect(function(err) {
   if(err) {

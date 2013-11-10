@@ -1,10 +1,22 @@
 var async = require('async');
 var mysql = require('mysql');
 
-var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-});
+
+if(process.env.NODE_ENV == 'dev') {
+  connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root'
+  });
+}
+else {
+  connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'srconn',
+    password: 'jarvis'
+  });
+}
+}
 
 var queries = [];
 
