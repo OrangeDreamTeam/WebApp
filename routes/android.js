@@ -44,7 +44,7 @@ exports.initializeGCM = function(req, res) {
 exports.saveSignature = function(req, res) {
   var imageData = req.body['imageData'];
   var randomNum = Math.floor((Math.random()*5000) + 1);
-  fs.writeFile('/signatures/' + randomNum + '.png', imageData, function(err) {
+  fs.writeFile('./public/signatures/' + randomNum + '.png', imageData, {encoding: 'base64'},function(err) {
     if(err) {
       console.log(err);
       res.send(500);
