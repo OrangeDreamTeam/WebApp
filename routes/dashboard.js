@@ -105,9 +105,9 @@ exports.startRoute = function(req, res) {
   });
 }
 
-exports.importCVS = function(req, res) {
+exports.importCSV = function(req, res) {
   var cvs = req.body['csv'];
-  
+  res.send(200);
 }
 
 var rowsToJson = function(rows, fields, callback) {
