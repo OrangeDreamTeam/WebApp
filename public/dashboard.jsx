@@ -248,7 +248,7 @@ var Dashboard = React.createClass({
       <div className='body'>
         <div className='left-column'>
           <JQUERYISDUMB />
-          <JQUERYISDUMB />
+          <div className='viewReportsButton'>VIEW REPORTS</div>
           <RouteTracker onAction={this.handleRouteAction} onMoreInfo={this.showRouteinfo} activeRoutes={this.state.activeRoutes} twilio={this.state.twilio}/>
 
         </div>
