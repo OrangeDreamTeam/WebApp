@@ -32,7 +32,7 @@ async.eachSeries(queries, function(query, callback) {
     console.log(err);
   }
   else {
-    connection.disconnect();
+    connection.end();
     console.log('Done.');
   }
 });
