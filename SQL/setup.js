@@ -16,7 +16,6 @@ else {
     password: 'jarvis'
   });
 }
-}
 
 var queries = [];
 
