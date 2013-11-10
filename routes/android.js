@@ -20,7 +20,20 @@ exports.initializeGCM = function(req, res) {
 
 exports.getDashboard = function(req, res) {
   var phoneNumber = connection.escape(req.body['phoneNumber']);
-  var currentDate = connect.escape(req.body['currentDate']);
+  var currentDate = connection.escape(req.body['currentDate']);
+
+  var selectQuery = 'SELECT * FROM Phone INNER JOIN Route ON Route.phoneId == Phone.UID INNER JOIN Service ON Route.UID == Service.routeId WHERE Service.Date == ' + currentDate + ' AND Phone.phoneNumber == ' + phoneNumber + ';';
+  connection.query(selectQuery, function(err, rows, fields) {
+    if(err) {
+      console.log(err);
+      res.send(500);
+    }
+    else {
+      rowsToJson(rows, fields, function(response) {
+        res.json(response);
+      });
+    }
+  });
 }
 
 var rowsToJson = function(rows, fields, callback) {
