@@ -29,9 +29,9 @@ queries.push('CREATE TABLE Service (UID int NOT NULL AUTO_INCREMENT, routeId int
 queries.push('CREATE TABLE Client (UID int NOT NULL AUTO_INCREMENT, name varchar(255), clientNumber varchar(255), address varchar(255), clientNotes varchar(255), PRIMARY KEY (UID));')
 queries.push('CREATE TABLE Alert (UID int NOT NULL AUTO_INCREMENT, phoneId int, message varchar(140), sender varchar(255), time varchar(255), PRIMARY KEY (UID));');
 
-queries.push('INSERT INTO Phone (phoneName, phoneNumber, gcmKey) VALUES ("John Jackson", "4593022932", "42394823948329483294823fjkdsfj");');
-queries.push('INSERT INTO Phone (phoneName, phoneNumber, gcmKey) VALUES ("Aaron Smith", "1302938493", "klvxzckncxzvcmnfkdflkjk");');
-queries.push('INSERT INTO Phone (phoneName, phoneNumber, gcmKey) VALUES ("Tomer Elmalem", "9482039920", "kojdilsf;lfsjklfdsjklsdfaj");');
+queries.push('INSERT INTO Phone (phoneName, phoneNumber, gcmKey) VALUES ("Yuval Dekel", "4593022932", "42394823948329483294823fjkdsfj");');
+queries.push('INSERT INTO Phone (phoneName, phoneNumber, gcmKey) VALUES ("Jarvis Johnson", "1302938493", "klvxzckncxzvcmnfkdflkjk");');
+queries.push('INSERT INTO Phone (phoneName, phoneNumber, gcmKey) VALUES ("Jamie Crabb", "3522469088", "kojdilsf;lfsjklfdsjklsdfaj");');
 connection.connect();
 
 async.eachSeries(queries, function(query, callback) {
