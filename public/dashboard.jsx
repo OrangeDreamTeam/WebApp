@@ -91,11 +91,11 @@ var ContactList = React.createClass({
     var phones = this.props.phones, phoneBoxes = [];
     for (var i = 0; i < phones.length; i++) {
       phoneBoxes.push(<div className="phone-box" onClick={this.props.onSelect} data-phone={JSON.stringify(phones[i])}>
-        <h4>{phones[i].name}</h4>
-        <p>{phones[i].pnum}</p>
+        <div className="phoneName">{phones[i].name}</div>
+        <div className="contactPhone">{phones[i].pnum}</div>
         </div>);
     }
-    return <div className='contact-list'><h3>Contacts</h3>{phoneBoxes}</div>;
+    return <div className='contact-list'><div className="contactTitle">Contact List</div>{phoneBoxes}</div>;
   }
 });
 
@@ -104,9 +104,9 @@ var RoutesList = React.createClass({
     var routes = this.props.routes, routeBoxes = [];
     for (var i = 0; i < routes.length; i++) {
       routeBoxes.push(<div className="route-box" onClick={this.props.onSelect} data-route={JSON.stringify(routes[i])}>
-        <h4>{routes[i].name}</h4>
-        <h5>{routes[i].stops + " stops"}</h5>
-        <p>{"last fulfilled on " + routes[i].last}</p>
+        <div className='caretaker-name'>{routes[i].name}</div>
+        <div className='route-progress'>{routes[i].stops + " stops"}</div>
+        <div>{"last fulfilled on " + routes[i].last}</div>
         </div>);
     }
     return <div className='routes-list'><h3>Routes</h3>{routeBoxes}</div>;
@@ -133,8 +133,8 @@ var AlertsList = React.createClass({
     }
     console.log("alerts",alerts);
     return <div className="alerts-list">
-      <h3>Recent Alerts</h3>
-      <button>View All</button>
+      <div className="alertsTitle">Recent Alerts</div>
+      <button className='viewAllButton'>View All</button>
       <div className="alerts">
         {alerts}
       </div>
@@ -148,8 +148,8 @@ var RouteTracker = React.createClass({
     for (var i = 0; i < routes.length; i++) {
       routejson = JSON.stringify(routes[i]);
       routeBoxes.push(<div className="route-tracking-box">
-          <h4 className='caretaker-name'>{routes[i].caretaker}</h4>
-          <h5 className='route-progress'>{'Stops Visited: '+routes[i].progress+'/'+routes[i].route.stops}</h5>
+          <div className='caretaker-name'>{routes[i].caretaker}</div>
+          <div className='route-progress'>{'Stops Visited: '+routes[i].progress+'/'+routes[i].route.stops}</div>
           <div className='route-actions'>
             <button data-type={'schedule'} data-route={routejson} onClick={this.props.onAction}>Schedule</button>
             <button data-type={'track'} data-route={routejson} onClick={this.props.onAction}>Map</button>
@@ -160,8 +160,8 @@ var RouteTracker = React.createClass({
     }
     return <div className='routes-tracker'>
         <div className="top-bar">
-          <h3>Active Today</h3>
-          <button className="view-schedule-btn">View Schedule</button>
+          <div className='activeTitle'>Active Today</div>
+          <button className="view-schedule-btn">View Schedules</button>
           <button className="alert-all-btn">Alert All</button>
         </div>
         <div className="main-chart">
