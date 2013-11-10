@@ -1,3 +1,6 @@
+var csv = require('csv');
+var fs = require('fs');
+
 exports.getRoutes = function(req, res) {
   var selectQuery = 'SELECT * FROM Route;';
   connection.query(selectQuery, function(err, rows, fields) {
@@ -114,4 +117,32 @@ var rowsToJson = function(rows, fields, callback) {
     });
   });
   callback(jsonResponse);
+}
+
+var CSVtoSchedule = function(filePath, callback) {
+  csv().from.path(filePath, {
+    columns: true
+  }).to(function(data) {
+  }).transform(function(row) {
+    var insertValues = '';
+    var insertFields = '';
+
+    for(var key in row) {
+      insertFields += key + ',';
+      insertValues += row.key + ',';
+    }
+
+    insertFields = insertFields.substring(0, insertFields.length - 1);
+    insertValues = insertValues.substring(0, insertValues.length - 1);
+
+    var insertQuery = 'INSERT INTO Route (' + insertFields + ') VALUES(' + insertValues + ');';
+    connection.query(insertQuery, function(err, rows) {
+      if(err) {
+        callback(err);
+      }
+      else {
+        callback(null);
+      }
+    });
+  });
 }
