@@ -95,7 +95,7 @@ var ContactList = React.createClass({
         <p>{phones[i].pnum}</p>
         </div>);
     }
-    return <div className='contact-list'><h3>ContactList</h3>{phoneBoxes}</div>;
+    return <div className='contact-list'><h3>Contacts</h3>{phoneBoxes}</div>;
   }
 });
 
@@ -159,8 +159,14 @@ var RouteTracker = React.createClass({
         </div>);
     }
     return <div className='routes-tracker'>
-        <h3>Active Today</h3>
-        {routeBoxes}
+        <div className="top-bar">
+          <h3>Active Today</h3>
+          <button className="view-schedule-btn">View Schedule</button>
+          <button className="alert-all-btn">Alert All</button>
+        </div>
+        <div className="main-chart">
+          {routeBoxes}
+        </div>
       </div>;
   }
 });
@@ -253,7 +259,6 @@ var Dashboard = React.createClass({
 
         </div>
         <div className='right-column'>
-          <RoutesList onSelect={this.selectRoute} routes={this.state.routes} />
           <AlertsList alerts={this.state.alerts} />
           <ContactList ponSelect={this.selectPhone} phones={this.state.phones} />
         </div>
