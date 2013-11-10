@@ -18,6 +18,11 @@ exports.initializeGCM = function(req, res) {
   });
 }
 
+exports.getDashboard = function(req, res) {
+  var phoneNumber = connection.escape(req.body['phoneNumber']);
+  var currentDate = connect.escape(req.body['currentDate']);
+}
+
 var rowsToJson = function(rows, fields, callback) {
   var jsonResponse = [];
   rows.forEach(function(row, index) {
