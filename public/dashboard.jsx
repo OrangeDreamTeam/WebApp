@@ -4,6 +4,9 @@
 var socket = io.connect('http://localhost');
 
 var Header = React.createClass({
+  link: function() {
+    window.location = '/';
+  },
   render: function() {
     var login_indicator;
     if (this.props.user) {
@@ -24,7 +27,7 @@ var Header = React.createClass({
       backgroundImage: "url(/dashlogo.png)"
     };
     return <div className={['header']}><div className={['headerContainer']}>
-      <div className='logo' style={logo_style}></div>
+      <div className='logo' style={logo_style} onClick={this.link}></div>
       {login_indicator}
       <div className='stats'>
         <div className='statNumbers'>

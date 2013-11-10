@@ -16,6 +16,7 @@ body {
 .logo {
   float: left;
   margin-top: 20px;
+  cursor: pointer;
 }
 
 .stats {
