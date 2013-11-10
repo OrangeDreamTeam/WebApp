@@ -1,4 +1,4 @@
 name,clientNumber,address,clientNotes,routeName,phoneName,service,startTime,endTime,FS,units,notes
-"Chris Amavisca","7704031674","1133 Huff Road #448 Atlanta, GA","Route for Chris","John Jackson","HS","1384095276242", "1384095284931","X","2","Go to Garage"
-"Yuval Dekel","6763943021","3294 Georgia Tech Station Atlanta, GA","Route for Dekel","Aaron Smith","M","1384268201521", "1384288201521","Y","1","Dekel is awesome"
-"Jamie Crabb","9120430392","404 Market Street San Francisco, CA","Route for Jamie","Tomer Elmalem","HS","1384269201521", "1384270000000","Z","3","Jamie slept so much"
+"Chris Amavisca","7704031674","1133 Huff Road #448 Atlanta, GA","","Route for Chris","John Jackson","HS","1384083061073","1384083064073","X","2","Go to Garage"
+"Yuval Dekel","6763943021","3294 Georgia Tech Station Atlanta, GA","","Route for Dekel","Aaron Smith","M","1384083061073","1384083064073","Y","1","Dekel is awesome"
+"Jamie Crabb","9120430392","404 Market Street San Francisco, CA","","Route for Jamie","Tomer Elmalem","HS","1384083061073","1384083064073","Z","3","Jamie slept so much"

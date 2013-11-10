@@ -209,6 +209,7 @@ var CSVtoSchedule = function(csvFile, callback) {
       }
       else {
         var selectPhoneQuery = 'SELECT UID FROM Phone WHERE phoneName = "' + row.phoneName + '";';
+        console.log(selectPhoneQuery);
         connection.query(selectPhoneQuery, function(err, phone) {
           if(err) {
             console.log(err);
@@ -221,20 +222,13 @@ var CSVtoSchedule = function(csvFile, callback) {
               }
               else {
                 var insertServiceQuery = 'INSERT INTO Service (routeId, clientId, service, startTime, endTime, FS, units, notes) VALUES ("' + route.insertId + '", "' + client.insertId + '", "' + row.service + '", "' + row.startTime + '", "' + row.endTime + '", "' + row.FS + '", "' + row.units + '", "' + row.notes + '");';
+                console.log(insertServiceQuery);
                 connection.query(insertServiceQuery, function(err, service) {
                   if(err) {
                     console.log(err);
                   }
                   else {
-                    var selectAllRoutesQuery = 'SELECT * FROM Route;';
-                    connection.query(selectAllRoutesQuery, function(err, routes) {
-                      if(err) {
-                        console.log(err);
-                      }
-                      else {
-                        sockets.updateRoutes(routes);
-                      }
-                    });
+                    exports.socketRoutes();
                   }
                 });
               }
