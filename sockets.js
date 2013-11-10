@@ -75,3 +75,8 @@ exports.sendTrackingInfo = function(socket_id, info) {
     }
   }
 };
+
+exports.updateRoutes = function(routes, callback) {
+  io.sockets.emit('routes', {routes: routes});
+  callback();
+}
