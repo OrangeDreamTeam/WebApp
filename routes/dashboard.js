@@ -4,8 +4,6 @@ exports.getRoutes = function(req, res) {
   var selectQuery = 'SELECT * FROM Route;';
   connection.query(selectQuery, function(err, rows, fields) {
     if(err) {
-      console.log(err);
-      res.send(500);
     }
     else {
       rowsToJson(rows, fields, function(response) {
@@ -14,6 +12,35 @@ exports.getRoutes = function(req, res) {
     }
   });
 };
+
+exports.socketRoutes = function() {
+  var selectQuery = 'SELECT * FROM Route INNER JOIN Phone on Phone.UID = Route.phoneId;';
+  connection.query(selectQuery, function(err, rows, fields) {
+    if(err) {
+    }
+    else {
+      rowsToJson(rows, fields, function(response) {
+        sockets.updateRoutes(response);
+      });
+    }
+  });
+};
+
+exports.socketPhones = function() {
+  var selectQuery = 'SELECT * FROM Phone;';
+  connection.query(selectQuery, function(err, rows, fields) {
+    if(err) {
+      console.log(err);
+      res.send(500);
+    }
+    else {
+      rowsToJson(rows, fields, function(response) {
+        sockets.sendPhones(response);
+      });
+    }
+  });
+};
+
 
 exports.getPhones = function(req, res) {
   var selectQuery = 'SELECT * FROM Phone;';
@@ -148,7 +175,7 @@ var rowsToJson = function(rows, fields, callback) {
   rows.forEach(function(row, index) {
     jsonResponse.push({});
     fields.forEach(function(field) {
-      jsonResponse[index].field = row.field;
+      jsonResponse[index][field.name] = row[field.name];
     });
   });
   callback(jsonResponse);
@@ -192,9 +219,7 @@ var CSVtoSchedule = function(csvFile, callback) {
                         console.log(err);
                       }
                       else {
-                        sockets.updateRoutes(routes, function() {
-                          callback();
-                        });
+                        sockets.updateRoutes(routes);
                       }
                     });
                   }
