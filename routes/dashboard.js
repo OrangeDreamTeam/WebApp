@@ -151,7 +151,7 @@ exports.addAlert = function(pid, msg) {
   });
 };
 
-exports.getAlert = function(req, res) {
+exports.getAlerts = function(req, res) {
   var formatRows = function(rows) {
     return rows.map(function(row) {
       return {
