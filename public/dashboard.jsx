@@ -230,7 +230,7 @@ var Dashboard = React.createClass({
       Twilio.Device.setup(twiData.token);
       Twilio.Device.ready(function(device) {
         Twilio.Device.connect({
-          CallerId: '+1 678-389-7815',
+          CallerId: '+16783897815',
           PhoneNumber: twiData.num
         });
         //setState.call(component, {twilio: true});
