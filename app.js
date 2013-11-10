@@ -34,10 +34,6 @@ server.listen(app.get('port'), function(){
 app.get('/', function(req, res) {
   res.render('index', {});
 });
-app.post('/csv_import', function(req, res) {
-  console.log('file content:',req.body.csv);
-  res.end('done');
-});
 
 connection = mysql.createConnection({
   host: 'localhost',
@@ -64,6 +60,7 @@ connection.connect(function(err) {
     app.get('/getPhones', dashboard.getPhones);
     app.get('/getActiveRoutes', dashboard.getActiveRoutes);
     app.post('/createRoute', dashboard.createRoute);
+    app.post('/importCSV', dashboard.importCSV);
 
     app.post('/android/initializeGCM', android.initializeGCM);
 
