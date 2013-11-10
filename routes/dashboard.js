@@ -1,3 +1,5 @@
+var csv = require('csv');
+
 exports.getRoutes = function(req, res) {
   var selectQuery = 'SELECT * FROM Route;';
   connection.query(selectQuery, function(err, rows, fields) {
@@ -106,8 +108,10 @@ exports.startRoute = function(req, res) {
 }
 
 exports.importCSV = function(req, res) {
-  var cvs = req.body['csv'];
-  res.send(200);
+  var csv = req.body['csv'];
+  CSVtoSchedule(csv, function() {
+    res.send(200);
+  });
 }
 
 var rowsToJson = function(rows, fields, callback) {
@@ -119,4 +123,58 @@ var rowsToJson = function(rows, fields, callback) {
     });
   });
   callback(jsonResponse);
+}
+
+var CSVtoSchedule = function(csvFile, callback) {
+  csv().from.string(csvFile, {
+    columns: true,
+    delimiter: ',',
+    escape: '"'
+  }).to(function(data) {
+  }).transform(function(row) {
+    var insertClientQuery = 'INSERT INTO Client (name, phoneNumber, address, notes) VALUES ("' + row.name + '", "' + row.phoneNumber + '", "' + row.address + '", "' + row.clientNotes + '");';
+    console.log(insertClientQuery);
+    connection.query(insertClientQuery, function(err, client) {
+      if(err) {
+        console.log(err);
+      }
+      else {
+        var selectPhoneQuery = 'SELECT UID FROM Phone WHERE phoneName = "' + row.phoneName + '";';
+        connection.query(selectPhoneQuery, function(err, phone) {
+          if(err) {
+            console.log(err);
+          }
+          else {
+            var insertRouteQuery = 'INSERT INTO Route (routeName, phoneId) VALUES ("' + row.routeName + '", "' + phone[0].UID + '");';
+            connection.query(insertRouteQuery, function(err, route) {
+              if(err) {
+                console.log(err);
+              }
+              else {
+                var insertServiceQuery = 'INSERT INTO Service (routeId, clientId, service, startTime, endTime, FS, units, notes) VALUES ("' + route.insertId + '", "' + client.insertId + '", "' + row.service + '", "' + row.startTime + '", "' + row.endTime + '", "' + row.FS + '", "' + row.units + '", "' + row.notes + '");';
+                connection.query(insertServiceQuery, function(err, service) {
+                  if(err) {
+                    console.log(err);
+                  }
+                  else {
+                    var selectAllRoutesQuery = 'SELECT * FROM Route;';
+                    connection.query(selectAllRoutesQuery, function(err, routes) {
+                      if(err) {
+                        console.log(err);
+                      }
+                      else {
+                        sockets.updateRoutes(routes, function() {
+                          callback();
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  });
 }
