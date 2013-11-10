@@ -67,6 +67,8 @@ connection.connect(function(err) {
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
 
+    app.get('/alerts', dashboard.getAlerts);
+    app.get('/alerts/:phonenum', dashboard.getAlerts);
     app.get('/getRoutes', dashboard.getRoutes);
     app.get('/getPhones', dashboard.getPhones);
     app.get('/getActiveRoutes', dashboard.getActiveRoutes);

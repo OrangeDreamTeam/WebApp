@@ -116,10 +116,24 @@ var RoutesList = React.createClass({
 });
 
 var AlertsList = React.createClass({
+  getInitialState: function() {
+    return {max: 5};
+  },
+  toggleLimit: function(e) {
+    e.preventDefault();
+    if (this.state.max == 5) {
+      this.setState({max: 100000});
+    } else {
+      this.setState({max: 5});
+    }
+  },
   render: function() {
     console.log('120',this.props.alerts);
     var alerts = [], alert;
     for (var i = this.props.alerts.length -1; i >= 0; i--) {
+      if (alerts.length >= this.state.max) {
+        break;
+      }
       alert = this.props.alerts[i];
       alerts.push(<div className="alert-box">
           <div className="alert-time">{new Date(parseInt(alert.time, 10)).toLocaleTimeString()}</div>
@@ -137,7 +151,7 @@ var AlertsList = React.createClass({
     console.log("alerts",alerts);
     return <div className="alerts-list">
       <div className="alertsTitle">Recent Alerts</div>
-      <button className='viewAllButton'>View All</button>
+      <button className='viewAllButton' onClick={this.toggleLimit}>{(this.state.max == 5)?"View All":"View Less"}</button>
       <div className="alerts">
         {alerts}
       </div>
