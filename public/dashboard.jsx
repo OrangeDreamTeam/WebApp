@@ -117,18 +117,19 @@ var RoutesList = React.createClass({
 
 var AlertsList = React.createClass({
   render: function() {
+    console.log('120',this.props.alerts);
     var alerts = [], alert;
     for (var i = 0; i < this.props.alerts.length; i++) {
       alert = this.props.alerts[i];
       alerts.push(<div className="alert-box">
-          <div className="alert-time">{alert.time.toLocaleTimeString()}</div>
+          <div className="alert-time">{new Date(parseInt(alert.time, 10)).toLocaleTimeString()}</div>
           <div className="message">
             <div className="message-body">
               {alert.message}
             </div>
             <div className="message-recipient">
-              <span className="name">{alert.name}</span>
-              <span className="phone">{alert.phone}</span>
+              <span className="name">{alert.sender}</span>
+              <span className="phone">{alert.phoneNumber}</span>
             </div>
           </div>
         </div>);
@@ -184,31 +185,27 @@ var Dashboard = React.createClass({
         stops: 3},
       progress: 1}
     ];
-    var alerts = [
-      {name: "Jamie Crabb",
-       phone: "912-337-1703",
-       time: new Date(2013, 11, 9, 6, 0),
-       message: "Yuval Dekel will not be home today, you need to reschedule for another day."
-      }
-    ];
-    return {activeRoutes: activeRoutes, selectedPhone: null, selectedRoute: null, phones:[], routes:[], alerts: alerts, twilio: false};
+    return {activeRoutes: activeRoutes, selectedPhone: null, selectedRoute: null, phones:[], routes:[], alerts: [], twilio: false};
   },
   componentWillMount: function() {
     var setState = this.setState;
     var component = this;
     //setup socket.io notifications and stuff
     socket.on('alert', function (data) {
-    console.log(data);
+      console.log(data);
     });
     socket.on('track', function (info) {
-    console.log(data);
+      console.log(data);
     });
     socket.on('phones', function (phonesData) {
-    setState.call(component,{phones: phonesData.phones});
+      setState.call(component,{phones: phonesData.phones});
     console.log(phonesData);
     });
+    socket.on('alerts', function (phonesData) {
+      setState.call(component,{alerts: phonesData.alerts});
+    });
     socket.on('routes', function (routesData) {
-    setState.call(component,{routes: routesData.routes});
+      setState.call(component,{routes: routesData.routes});
     console.log(routesData)
     });
     socket.emit('phones');
