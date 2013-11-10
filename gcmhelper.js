@@ -6,8 +6,6 @@ var apiKey = 'AIzaSyB2iIwQYMXLT7PynxXwBFzuH2DfafbIL8E';
 
 exports.requestTracking = function(phonenum, socket_id) {
   //this function will send a gcm message to the phone that asks it for it's current location
-
-
   var getGCMQuery = 'SELECT * FROM Phone WHERE Phone.phoneNumber = "' + phonenum + '";';
   connection.query(getGCMQuery, function(err, row) {
     if(err) {

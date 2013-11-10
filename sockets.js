@@ -30,6 +30,10 @@ io.sockets.on('connection', function(socket) {
     gcmhelper.requestTracking(data.phonenumber, socket.id);
   });
 
+  socket.on('alert', function(data) {
+    gcmhelper.requestAlert(data.phonenumber, socket.id);
+  });
+
   var sendTrackingInfo = function(info) {
     socket.send(info);
   };
