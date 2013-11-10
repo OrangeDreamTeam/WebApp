@@ -43,8 +43,7 @@ exports.initializeGCM = function(req, res) {
 
 exports.saveSignature = function(req, res) {
   var imageData = req.body['imageData'];
-  var serviceId = req.body['serviceId'];
-  fs.writeFile('/signatures/' + serviceId + '.png', imageData, function(err) {
+  fs.writeFile('/signatures/test.bmp', imageData, function(err) {
     if(err) {
       console.log(err);
       res.send(500);
