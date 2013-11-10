@@ -31,7 +31,7 @@ exports.requestTracking = function(phonenum, socket_id) {
   });
 }
 
-exports.requestAlert = function(phonenum, socket_id, message) {
+exports.requestAlert = function(phonenum, socket_id, msg) {
   //this function will send a gcm message to the phone that asks it for it's current location
 
   var getGCMQuery = 'SELECT * FROM Phone WHERE Phone.phoneNumber = "' + phonenum + '";';
@@ -40,12 +40,13 @@ exports.requestAlert = function(phonenum, socket_id, message) {
       console.log(err);
     }
     else {
+      console.log(message);
       var regId = row[0].gcmKey;
       var message = new gcm.Message({
         delayWhileIdle: true,
         timeToLive: 5,
         data: {
-          message: message,
+          msg: msg,
           type: 'alert',
           socketId: socket_id
         }

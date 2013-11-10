@@ -1,11 +1,11 @@
 var io = require('socket.io').listen(server),
   util = require('util'),
   twilio = require('twilio'),
-  capability = new twilio.Capability('AC5b1e80ceb7c8be03be7e6a0d1fce8874','fb721de8b4fc9c091a923b37a323a999');
+  capability = new twilio.Capability('AC26d09258622cd3278b5677a4d5550110','628e0dab1e34df75b68a70ba13286b2b');
   gcmhelper = require('./gcmhelper');
 
 
-capability.allowClientOutgoing('AP123');
+capability.allowClientOutgoing('AP8be81f51552aa2b879fe4f6dacb15674');
 var phones = [
   {pnum: 4049066696,
     name: "dekelphone"},
@@ -31,6 +31,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('alert', function(data) {
+    console.log(data);
     gcmhelper.requestAlert(data.phonenumber, socket.id, data.message);
     dashboard.addAlert(data.phoneid, data.message);
   });
@@ -62,7 +63,7 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('twi-token', function(data) {
-    console.log('TOKEN TOKEN TOKEN');
+    console.log(data);
     socket.emit('twi-token', {token: capability.generate(600), num: data.num});
   });
 
@@ -79,8 +80,6 @@ io.sockets.on('connection', function(socket) {
  * located and the location coordinates.
  */
 exports.sendTrackingInfo = function(socket_id, info) {
-  console.log("oeuaeu",arguments);
-  console.log(socket_funcs);
   if (socket_funcs[socket_id]) {
     if (socket_funcs[socket_id].sendTrackingInfo) {
       socket_funcs[socket_id].sendTrackingInfo(info);
@@ -97,7 +96,6 @@ exports.sendPhones = function(phones) {
 };
 
 exports.sendAlerts = function(alerts) {
-  console.log(alerts);
   io.sockets.emit('alerts', {alerts: alerts});
 };
 
