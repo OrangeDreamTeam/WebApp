@@ -74,6 +74,7 @@ connection.connect(function(err) {
 
     app.post('/createRoute', dashboard.createRoute);
     app.post('/importCSV', dashboard.importCSV);
+    app.post('/track', dashboard.postTrack);
 
     app.post('/register', android.initializeGCM);
 

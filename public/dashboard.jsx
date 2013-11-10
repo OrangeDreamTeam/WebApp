@@ -119,7 +119,7 @@ var AlertsList = React.createClass({
   render: function() {
     console.log('120',this.props.alerts);
     var alerts = [], alert;
-    for (var i = 0; i < this.props.alerts.length; i++) {
+    for (var i = this.props.alerts.length -1; i >= 0; i--) {
       alert = this.props.alerts[i];
       alerts.push(<div className="alert-box">
           <div className="alert-time">{new Date(parseInt(alert.time, 10)).toLocaleTimeString()}</div>
@@ -195,7 +195,8 @@ var Dashboard = React.createClass({
       console.log(data);
     });
     socket.on('track', function (info) {
-      console.log(data);
+      var url = "http://maps.google.com/?q="+info.lat+","+info.long;
+      window.open(url, "about:new");
     });
     socket.on('phones', function (phonesData) {
       setState.call(component,{phones: phonesData.phones});
@@ -210,6 +211,7 @@ var Dashboard = React.createClass({
     });
     socket.emit('phones');
     socket.emit('routes');
+    socket.emit('alerts');
     socket.on('twi-token', function(twiData) {
       console.log('twi-token');
       Twilio.Device.setup(twiData.token);
@@ -234,7 +236,8 @@ var Dashboard = React.createClass({
     if (e.target.dataset.type === "track") {
       socket.emit('track', {phonenumber: route.phoneNumber});
     } else if (e.target.dataset.type === "alert") {
-      socket.emit('alert', {phonenumber: route.phoneNumber});
+      var msg = prompt("alert message:");
+      socket.emit('alert', {phonenumber: route.phoneNumber, phoneid: route.phoneId, message: msg});
     } else if (e.target.dataset.type === "call") {
       console.log('call');
       socket.emit('twi-token', {num: route.phoneNumber});

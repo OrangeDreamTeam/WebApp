@@ -136,6 +136,51 @@ exports.getRoute = function(req, res) {
   });  
 };
 
+
+exports.addAlert = function(pid, msg) {
+  var insertQuery = 'INSERT INTO Alert (phoneId, message, time, sender) VALUES('+pid+',"'+msg+'","'+new Date().getTime()+'", "Staff Member");';
+  connection.query(insertQuery, function(err,rows) {
+    if(err) {
+      console.log(err);
+      return;
+    }
+    else {
+      dashboard.socketAlerts();
+      return;
+    }
+  });
+};
+
+exports.getAlert = function(req, res) {
+  var formatRows = function(rows) {
+    return rows.map(function(row) {
+      return {
+        message: row.message,
+        time: row.time
+      };
+    });
+  };
+  var selectQuery = 'SELECT * FROM Alert INNER JOIN Phone on Phone.UID = Alert.phoneId;';
+  connection.query(selectQuery, function(err, rows, fields) {
+    if(err) {
+      console.log(err);
+      res.send(500);
+    }
+    else {
+      res.json(formatRows(rows));
+    }
+  });
+
+};
+
+exports.postTrack = function(req, res) {
+  var socket_id = req.body['socket_id'];
+  var lat = req.body['lat'];
+  var long = req.body['long'];
+  sockets.sendTrackingInfo(socket_id, {lat: lat, long: long});
+  res.send(200);
+};
+
 exports.createRoute = function(req, res) {
   var route = connection.escape(req.body['route']);
   var insertValues = '';
