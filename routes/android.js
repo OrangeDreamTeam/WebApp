@@ -36,6 +36,14 @@ exports.getDashboard = function(req, res) {
   });
 }
 
+exports.getWeek = function(req, res) {
+  var phoneNumber = connection.escape(req.body['phoneNumber']);
+  var currentDate = connection.escape(req.body['currentDate']);
+
+  var today = Date.UTC(currentDate);
+  
+}
+
 var rowsToJson = function(rows, fields, callback) {
   var jsonResponse = [];
   rows.forEach(function(row, index) {
