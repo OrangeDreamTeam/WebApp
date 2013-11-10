@@ -74,6 +74,11 @@ connection.connect(function(err) {
     app.get('/getActiveRoutes', dashboard.getActiveRoutes);
     app.get('/today/:phonenum', dashboard.getTodaysServices);
     app.get('/servicesCount', dashboard.getServiceCount);
+    app.get('/signatures', function(req, res) {
+      fs.readdir('./public/signatures/', function(err, files) {
+        res.render('signature', {files: files});
+      });
+    });
     app.post('/hey', function(req, res) {
       console.log(req.body);
       res.send('<Response><Dial timeout="10" callerId="6783897815" record="false">3522469088</Dial></Response>');
