@@ -248,14 +248,14 @@ var CSVtoSchedule = function(csvFile, callback) {
 var cleanDate = function(date) {
   var hour = date.getHours();
   var minute = date.getMinutes();
-  var AM = 'AM';
+  var AMPM = 'AM';
   if((hour > 12) || ((hour === 12) && (minute >= 0)) || ((hour === 12) && (second >= 0))) {
     hour = hour - 12;
-    AM = 'PM';
+    AMPM = 'PM';
   }
   if(hour == 0) {
     hour = 12;
-    AM = 'AM';
+    AMPM = 'AM';
   }
   if(hour < 10) {
     hour = "" + hour.slice(1, 2);
